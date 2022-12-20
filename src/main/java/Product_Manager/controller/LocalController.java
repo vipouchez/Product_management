@@ -29,27 +29,25 @@ public class LocalController {
         model.addAttribute("products", products);
         return "products";
     }
+
     @GetMapping("/addproduct")
-    public String addProduct(Model m ) {
+    public String addProduct(Model m) {
         m.addAttribute("listCategory", cs.getAllCategories());
         return "addproduct";
     }
 
     @GetMapping("/productmc")
-    public String getProductBMC(@RequestParam String mc,Model m)
-    {
+    public String getProductBMC(@RequestParam String mc, Model m) {
         List<Product> products = ps.searchByName(mc);
-        m.addAttribute("products",products);
+        m.addAttribute("products", products);
         return "products";
     }
 
     @PostMapping("saveproduct")
-    public String saveProduct(Product p){
-        ps.saveProduct(p);
-
+    public String saveProduct(Product p) {
+        //  ps.saveProduct(p);
+        return "saveproduct";
     }
-
-
 
 
 }
