@@ -4,15 +4,20 @@ package Product_Manager.controller;
 import Product_Manager.entities.Product;
 import Product_Manager.services.CategoryService;
 import Product_Manager.services.ProductService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Controller
@@ -44,9 +49,18 @@ public class LocalController {
     }
 
     @PostMapping("saveproduct")
-    public String saveProduct(Product p) {
-        //  ps.saveProduct(p);
-        return "saveproduct";
+    public ModelAndView saveProduct(@ModelAttribute  Product p, @RequestParam("file") MultipartFile file) throws IOException {
+        ps.saveProduct(p, file);
+        return new ModelAndView("redirect:/productapi/all");
+    }
+
+
+    @GetMapping(value = "/images/{imageNameOnServer}",
+            produces = MediaType.IMAGE_JPEG_VALUE)
+
+    public @ResponseBody byte[] getImage(@PathVariable String imageNameOnServer) throws IOException {
+        InputStream in = new FileInputStream(System.getProperty("user.home")+ File.separator +  "images2022" + File.separator + imageNameOnServer);
+        return IOUtils.toByteArray(in);
     }
 
 

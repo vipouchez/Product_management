@@ -20,7 +20,7 @@
 <br><hr>
 <table class="table table-hover">
 <tr>
- <th>Id</th><th>Name</th><th>Price</th><th>Quantity</th><th>Categorie</th><th>Action</th>
+ <th>Id</th><th>Name</th><th>Price</th><th>Quantity</th><th>Categorie</th><th>Picture</th><th>Action</th>
 </tr>
 <c:forEach items="${products}" var="p">
 <tr>
@@ -29,6 +29,7 @@
 <td>${p.price }</td>
 <td>${p.quantity}</td>
 <td>${p.category.name}</td>
+<td> <img src="/productapi/images/${p.picture}"  width="50" height="50" /> </td>
 </tr>
 </c:forEach>
 </table>

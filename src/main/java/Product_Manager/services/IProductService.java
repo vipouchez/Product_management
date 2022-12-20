@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IProductService {
-    void saveProduct(Product p, MultipartFile mf);
+    void saveProduct(Product p, MultipartFile mf) throws IOException;
     List<Product> getAllProducts() ;
     Product getProduct(int id);
     List<Product> searchByName(String mc);

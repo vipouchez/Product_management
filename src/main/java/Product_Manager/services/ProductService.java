@@ -17,7 +17,13 @@ public class ProductService implements IProductService{
      ProductRepository pr ;
 
     @Override
-    public void saveProduct(Product p, MultipartFile mf) {
+    public void saveProduct(Product p, MultipartFile mf) throws IOException {
+        if(!mf.getOriginalFilename().isEmpty()){
+            String filePathOnServer = saveImage(mf);
+            p.setPicture(filePathOnServer);
+        }
+
+        pr.save(p);
     }
 
     @Override
