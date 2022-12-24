@@ -15,7 +15,7 @@
 <input type="text" id="mc" class="form-control" name=mc>
 </div>
 <div class="col-md-3">
-<button type="submit" class="btn btn-primary">Chercher</button>
+<button type="submit" class="btn btn-primary">Search</button>
 </div> </div> </div> </form>
 <br><hr>
 <table class="table table-hover">
@@ -30,6 +30,12 @@
 <td>${p.quantity}</td>
 <td>${p.category.name}</td>
 <td> <img src="/productapi/images/${p.picture}"  width="50" height="50" /> </td>
+<td> <form action="deleteproduct/${p.id}" method="post">
+         <button type="submit" class="btn btn-primary">Delete</button></form>
+  &nbsp; <form action="updateproduct/${p.id}" method="post">
+                  <button type="submit" class="btn btn-primary">Update</button></form>
+</td>
+
 </tr>
 </c:forEach>
 </table>

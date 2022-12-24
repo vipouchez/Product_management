@@ -26,6 +26,8 @@ public class ProductService implements IProductService{
         pr.save(p);
     }
 
+
+
     @Override
     public List<Product> getAllProducts() {
         return pr.findAll();
@@ -35,8 +37,13 @@ public class ProductService implements IProductService{
     public Product getProduct(int id) {
         return pr.findById(id).get();
     }
-
-   @Override
+/**
+    @Override
+    public void update(Product p) {
+        pr.updateProduct(p.getId(),p.getName(),p.getPrice(),p.getQuantity(),p.getCategory().getId());
+    }
+*/
+    @Override
     public List<Product> searchByName(String mc) {
        return pr.searchByKW(mc);
   }
@@ -57,10 +64,15 @@ public class ProductService implements IProductService{
         return fileModif;
     }
 
+
+
     @Override
     public byte[] getImage(int id) throws IOException {
         String nomImage=pr.findById(id).get().getPicture();
         Path p = Paths.get(System.getProperty("user.home")+"/images2022/",nomImage);
         return Files.readAllBytes(p);
     }
+
+
+
 }

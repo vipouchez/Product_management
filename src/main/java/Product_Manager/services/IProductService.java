@@ -10,9 +10,11 @@ public interface IProductService {
     void saveProduct(Product p, MultipartFile mf) throws IOException;
     List<Product> getAllProducts() ;
     Product getProduct(int id);
+ //   void update(Product p);
     List<Product> searchByName(String mc);
     void deleteProduct(int id);
     String saveImage(MultipartFile mf) throws IOException;
+
     byte[] getImage(int id) throws IOException;
 
 

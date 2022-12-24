@@ -6,7 +6,6 @@ import Product_Manager.services.CategoryService;
 import Product_Manager.services.ProductService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,18 +48,38 @@ public class LocalController {
     }
 
     @PostMapping("saveproduct")
-    public ModelAndView saveProduct(@ModelAttribute  Product p, @RequestParam("file") MultipartFile file) throws IOException {
+    public ModelAndView saveProduct(@ModelAttribute Product p, @RequestParam("file") MultipartFile file) throws IOException {
         ps.saveProduct(p, file);
         return new ModelAndView("redirect:/productapi/all");
     }
 
 
     @GetMapping(value = "/images/{imageNameOnServer}",
-            produces = MediaType.IMAGE_JPEG_VALUE)
+        produces = MediaType.IMAGE_JPEG_VALUE)
 
-    public @ResponseBody byte[] getImage(@PathVariable String imageNameOnServer) throws IOException {
-        InputStream in = new FileInputStream(System.getProperty("user.home")+ File.separator +  "images2022" + File.separator + imageNameOnServer);
+    public @ResponseBody
+    byte[] getImage(@PathVariable String imageNameOnServer) throws IOException {
+        InputStream in = new FileInputStream(System.getProperty("user.home") + File.separator + "images2022" + File.separator + imageNameOnServer);
         return IOUtils.toByteArray(in);
+    }
+
+    @PostMapping("/deleteproduct/{id}")
+    public String deleteProduct(@PathVariable int id) {
+        ps.deleteProduct(id);
+        return "redirect:/productapi/all";
+
+    }
+
+
+    @PostMapping("updateproduct/{id}")
+       public String updateProduct(Model m,@PathVariable int id){
+        m.addAttribute("listCategory", cs.getAllCategories());
+         Product p = ps.getProduct(id);
+         p.setId(id);
+        /**
+         ps.update(p);
+        */
+        return "update";
     }
 
 
