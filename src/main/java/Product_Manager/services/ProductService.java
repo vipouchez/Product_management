@@ -1,20 +1,29 @@
 package Product_Manager.services;
 
+import Product_Manager.dao.CategoryRepository;
 import Product_Manager.dao.ProductRepository;
+import Product_Manager.dto.ProductDto;
+import Product_Manager.entities.Category;
 import Product_Manager.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ProductService implements IProductService{
     @Autowired
      ProductRepository pr ;
+
+    @Autowired
+    CategoryRepository cr;
 
     @Override
     public void saveProduct(Product p, MultipartFile mf) throws IOException {
@@ -26,6 +35,26 @@ public class ProductService implements IProductService{
         pr.save(p);
     }
 
+    public void update (ProductDto p){
+        Optional<Product> productOptional = pr.findById(p.getId());
+        if(productOptional.isEmpty()){
+            throw new EntityNotFoundException("No entity found with id : " + p.getId());
+        }
+
+        Product product = productOptional.get();
+        product.setName(p.getName());
+        product.setQuantity(p.getQuantity());
+        product.setPrice(p.getPrice());
+
+        Optional<Category> categoryOptional = cr.findById(p.getCategoryId());
+        if(categoryOptional.isEmpty()){
+            throw new EntityNotFoundException("No entity found with id : " + p.getCategoryId());
+        }
+        Category category = categoryOptional.get();
+        product.setCategory(category);
+
+        pr.save(product);
+    }
 
 
     @Override

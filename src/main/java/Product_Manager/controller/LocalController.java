@@ -1,6 +1,7 @@
 package Product_Manager.controller;
 
 
+import Product_Manager.dto.ProductDto;
 import Product_Manager.entities.Product;
 import Product_Manager.services.CategoryService;
 import Product_Manager.services.ProductService;
@@ -70,18 +71,21 @@ public class LocalController {
 
     }
 
-
-    @PostMapping("updateproduct/{id}")
-       public String updateProduct(Model m,@PathVariable int id){
+    @GetMapping("product/{id}")
+    public String getProduct(Model m, @PathVariable int id){
+        Product product = ps.getProduct(id);
         m.addAttribute("listCategory", cs.getAllCategories());
-         Product p = ps.getProduct(id);
-         p.setId(id);
-        /**
-         ps.update(p);
-        */
-        return "update";
+        m.addAttribute("product", product);
+
+        return "product";
     }
 
+
+    @PostMapping("product")
+       public ModelAndView updateProduct(@ModelAttribute ProductDto productDto, Model m){
+        ps.update(productDto);
+        return new ModelAndView("redirect:/productapi/all");
+    }
 
 }
 

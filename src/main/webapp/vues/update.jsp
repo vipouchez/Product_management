@@ -6,6 +6,7 @@
 <body>
 <%@include file="navbar.html" %>
 <br>
+
 <div class=container>
 <div class="card m-5 p-2">
  <div class="card-header"><h2>update product</h2></div>

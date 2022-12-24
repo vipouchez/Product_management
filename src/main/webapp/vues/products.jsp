@@ -32,8 +32,7 @@
 <td> <img src="/productapi/images/${p.picture}"  width="50" height="50" /> </td>
 <td> <form action="deleteproduct/${p.id}" method="post">
          <button type="submit" class="btn btn-primary">Delete</button></form>
-  &nbsp; <form action="updateproduct/${p.id}" method="post">
-                  <button type="submit" class="btn btn-primary">Update</button></form>
+         <a href="/productapi/product/${p.id}" class="btn btn-primary" > update </a>
 </td>
 
 </tr>
